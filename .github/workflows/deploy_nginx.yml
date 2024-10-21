@@ -31,7 +31,8 @@ jobs:
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p> >> /var/www/html/index.html"
+          HOSTNAME=\$(hostname)  # Get the hostname from the host
+          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
         EOF
 
     - name: Deploy Nginx to Host 2
@@ -45,5 +46,6 @@ jobs:
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p> >> /var/www/html/index.html"
+          HOSTNAME=\$(hostname)  # Get the hostname from the host
+          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
         EOF
