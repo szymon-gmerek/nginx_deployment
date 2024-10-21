@@ -37,7 +37,7 @@ jobs:
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
         
-    - name: Get HTTTP Code from Host1
+    - name: Get HTTTP Code from Host2
       run: |  
         if curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.HOST1_IP }} | grep -q "200"; then
           echo "Deployment to Host 1 successful!"
