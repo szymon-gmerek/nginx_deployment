@@ -29,9 +29,10 @@ jobs:
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << 'EOF'
           cd /tmp
           sudo docker-compose down
-          sudo docker-compose up -d
+          sudo docker-compose up -d 
+          sleep 10
           
-          echo "<p>Host: \$(hostname)</p>" > /tmp/index.html
+          echo "<p>Host: \$(hostname)</p>" >> /tmp/index.html
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
 
