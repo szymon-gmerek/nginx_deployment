@@ -30,8 +30,8 @@ jobs:
         # Run docker-compose on host 1
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << EOF
           cd /tmp
-          docker-compose down
-          docker-compose up -d
+          sudo docker-compose down
+          sudo docker-compose up -d
         EOF
 
     - name: Deploy Nginx to Host 2
@@ -44,6 +44,6 @@ jobs:
         # Run docker-compose on host 2
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << EOF
           cd /tmp
-          docker-compose down
-          docker-compose up -d
+          sudo docker-compose down
+          sudo docker-compose up -d
         EOF
