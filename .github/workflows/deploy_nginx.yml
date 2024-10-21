@@ -34,6 +34,6 @@ jobs:
         # Run docker-compose on host
         ssh ${{ secrets.SSH_USER }}@${{ matrix.host_ip }} << EOF
           cd /tmp
-          docker-compose down
-          docker-compose up -d
+          sudo docker-compose down
+          sudo docker-compose up -d
         EOF
