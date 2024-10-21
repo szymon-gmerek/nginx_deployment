@@ -41,7 +41,7 @@ jobs:
       if: success()
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/docker-compose.yml
-        scp -o StrictHostKeyChecking=no index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.htm
+        scp -o StrictHostKeyChecking=no index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.html
         
         
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << 'EOF'
