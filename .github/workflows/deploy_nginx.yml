@@ -25,12 +25,11 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }}:/tmp/docker-compose.yml
 
-        # Run docker-compose on host 1
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << EOF
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << 'EOF'
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          sudo docker exec proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p>' >> /var/www/html/index.html"
+          sudo docker exec proxy /bin/sh -c "echo '<p>Host: \$(hostname)</p>' >> /var/www/html/index.html"
         EOF
 
     - name: Deploy Nginx to Host 2
