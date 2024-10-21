@@ -32,7 +32,9 @@ jobs:
           sudo docker-compose up -d 
           sleep 10
           
-          echo "<p>Host: \$(hostname)</p>" >> /tmp/index.html
+          HOSTNAME=\$(hostname)
+          sed -i "s/{{HOSTNAME}}/\$HOSTNAME/g" /tmp/index.html
+          
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
 
