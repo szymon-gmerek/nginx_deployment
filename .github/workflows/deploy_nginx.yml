@@ -38,6 +38,7 @@ jobs:
 
         # Copy docker-compose.yml to host
         scp $COMPOSE_FILE ${{ secrets.SSH_USER }}@$SSH_HOST:/tmp/docker-compose.yml
+        scp ./index.html ${SSH_USER}@${{ matrix.host }}:/var/www/html/
 
         # Run docker-compose on host
         ssh ${{ secrets.SSH_USER }}@$SSH_HOST << EOF
