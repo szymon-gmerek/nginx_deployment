@@ -24,13 +24,15 @@ jobs:
     - name: Deploy Nginx to Host 1
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }}:/tmp/docker-compose.yml
-
+        scp -o StrictHostKeyChecking=no index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }}:/tmp/index.html
+        
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << 'EOF'
           cd /tmp 
+          HOSTNAME=\$(hostname)
+          echo "<p>Host: \$HOSTNAME</p>" > /tmp/index.html
           sudo docker-compose down &&
           sudo docker-compose up -d &&
-          sudo docker-compose exec -T wg sh -c 'echo "<p>Host: \$(hostname)</p>" | tee -a /var/www/html/index.html'
-          #sudo docker compose exec proxy /bin/sh -c "ls -l /var"
+          sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
 
     - name: Deploy Nginx to Host 2
