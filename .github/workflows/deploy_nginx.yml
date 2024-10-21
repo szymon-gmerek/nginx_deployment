@@ -24,28 +24,26 @@ jobs:
     - name: Deploy Nginx to Host 1
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }}:/tmp/docker-compose.yml
-        # scp -o StrictHostKeyChecking=no ./index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }}:/tmp/index.html
 
         # Run docker-compose on host 1
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << EOF
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          HOSTNAME=\$(hostname)  # Get the hostname from the host
-          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
+          HOSTNAME=\$(hostname)  
+          sudo docker exec -T proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
         EOF
 
     - name: Deploy Nginx to Host 2
       if: success()
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/docker-compose.yml
-        # scp -o StrictHostKeyChecking=no ./index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.html
 
         # Run docker-compose on host 2
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << EOF
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          HOSTNAME=\$(hostname)  # Get the hostname from the host
-          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
+          HOSTNAME=\$(hostname) 
+          sudo docker exec -T proxy /bin/sh -c "echo '<p>Host: \$HOSTNAME</p>' >> /var/www/html/index.html"
         EOF
