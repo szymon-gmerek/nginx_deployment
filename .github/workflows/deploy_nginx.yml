@@ -1,4 +1,4 @@
-- name: Deploy Nginx
+name: Deploy Nginx
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
           sudo docker-compose down &&
           sudo docker-compose up -d &&
           #sudo docker exec proxy /bin/sh -c "echo '<p>Host: \$(hostname)</p>' >> /var/www/html/index.html" || true
-           sudo docker exec proxy /bin/sh -c "ls -l /var"
+          sudo docker exec proxy /bin/sh -c "ls -l /var"
         EOF
 
     - name: Deploy Nginx to Host 2
