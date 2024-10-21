@@ -28,11 +28,10 @@ jobs:
 
         # Run docker-compose on host 1
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST1_IP }} << EOF
-          mkdir ~/html
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          echo '<p>Host: \$(hostname)</p>' >> ~/html/index.html
+          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p> >> /var/www/html/index.html"
         EOF
 
     - name: Deploy Nginx to Host 2
@@ -43,9 +42,8 @@ jobs:
 
         # Run docker-compose on host 2
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << EOF
-          mkdir ~/html
           cd /tmp
           sudo docker-compose down
           sudo docker-compose up -d
-          echo '<p>Host: \$(hostname)</p>' >> ~/html/index.html
+          sudo docker exec -t proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p> >> /var/www/html/index.html"
         EOF
