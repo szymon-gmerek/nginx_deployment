@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        host_ip: [${{ secrets.HOST1_IP }}, ${{ secrets.HOST2_IP }}]
+        host_ip: ['3.252.192.123', '34.255.43.20']
 
     steps:
     - name: Checkout repository
