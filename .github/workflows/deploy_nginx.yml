@@ -41,11 +41,16 @@ jobs:
       if: success()
       run: |
         scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/docker-compose.yml
-
-        # Run docker-compose on host 2
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << EOF
+        scp -o StrictHostKeyChecking=no index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.htm
+        
+        
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << 'EOF'
           cd /tmp
-          sudo docker-compose down &&
-          sudo docker-compose up -d &&
-          sudo docker exec proxy /bin/sh -c "echo '<p>Host: '$(hostname)'</p>' >> /var/www/html/index.html" || true
+          sudo docker-compose down
+          sudo docker-compose up -d 
+          sleep 10
+          
+          sed -i "s/{{HOSTNAME}}/$(hostname)/g" /tmp/index.html
+          
+          sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
