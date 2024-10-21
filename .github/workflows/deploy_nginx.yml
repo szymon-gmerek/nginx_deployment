@@ -38,8 +38,8 @@ jobs:
       if: success()
       run: |
         # Copy docker-compose.yml and index.html to host 2
-        scp -o -v StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/docker-compose.yml
-        scp -o -v StrictHostKeyChecking=no ./index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.html
+        scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/docker-compose.yml
+        scp -o StrictHostKeyChecking=no ./index.html ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }}:/tmp/index.html
 
         # Run docker-compose on host 2
         ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST2_IP }} << EOF
