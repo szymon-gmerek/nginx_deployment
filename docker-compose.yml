@@ -6,12 +6,10 @@ services:
     container_name: proxy
     ports:
       - 80:80
-    # volumes:
-    #   - ./home/ubuntu/html:/var/www/html/  
     logging:
       driver: json-file
       options:
         max-size: 50m
     environment:
-      - MAINTENANCE=true
+      - MAINTENANCE=false
 
