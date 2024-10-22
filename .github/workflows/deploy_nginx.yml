@@ -37,9 +37,9 @@ jobs:
           if [ "$MAINTENANCE_STATUS" = "true" ]; then
             HOSTNAME=$(hostname)
             echo "<p>Host: $HOSTNAME</p>" >> /tmp/index.html
+            sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
           fi
-          
-          sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
+                    
         EOF
         
     - name: Get HTTTP Code from Host2
@@ -69,6 +69,7 @@ jobs:
           if [ "$MAINTENANCE_STATUS" = "true" ]; then
             HOSTNAME=$(hostname)
             echo "<p>Host: $HOSTNAME</p>" >> /tmp/index.html
+            sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
           fi
           
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
