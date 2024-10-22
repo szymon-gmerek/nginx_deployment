@@ -32,7 +32,12 @@ jobs:
           sudo docker-compose up -d 
           sleep 10
           
-          sed -i "s/{{HOSTNAME}}/$(hostname)/g" /tmp/index.html
+          MAINTENANCE_STATUS=$(sudo docker exec proxy sh -c "printenv MAINTENANCE")
+    
+          if [ "$MAINTENANCE_STATUS" = "true" ]; then
+            HOSTNAME=$(hostname)
+            echo "<p>Host: $HOSTNAME</p>" >> /tmp/index.html
+          fi
           
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
@@ -59,7 +64,12 @@ jobs:
           sudo docker-compose up -d 
           sleep 10
           
-          sed -i "s/{{HOSTNAME}}/$(hostname)/g" /tmp/index.html
+          MAINTENANCE_STATUS=$(sudo docker exec proxy sh -c "printenv MAINTENANCE")
+    
+          if [ "$MAINTENANCE_STATUS" = "true" ]; then
+            HOSTNAME=$(hostname)
+            echo "<p>Host: $HOSTNAME</p>" >> /tmp/index.html
+          fi
           
           sudo docker cp /tmp/index.html proxy:/var/www/html/index.html
         EOF
